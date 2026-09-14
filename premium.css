@@ -1,0 +1,129 @@
+/* Premium spatial interaction layer — progressive enhancement only */
+:root{
+  --premium-ease:cubic-bezier(.22,.61,.36,1);
+  --premium-slow:cubic-bezier(.16,1,.3,1);
+}
+
+/* Header refinement + scroll progress */
+.site-header{will-change:height,background-color,box-shadow}
+.site-header.is-scrolled{background:rgba(244,245,239,.965)}
+.scroll-progress{position:absolute;left:0;right:0;bottom:-1px;height:2px;overflow:hidden;pointer-events:none}
+.scroll-progress::after{content:"";display:block;width:100%;height:100%;background:var(--oxide);transform:scaleX(var(--page-progress,0));transform-origin:left center;will-change:transform}
+.site-nav a[aria-current="location"]:not(.nav-cta)::after{right:0}
+
+/* Hero typography: cinematic but restrained */
+.motion-ready .hero-copy.is-visible h1>span,
+.motion-ready .hero-copy.is-visible h1>strong{animation:soj-line-in .82s var(--premium-slow) both}
+.motion-ready .hero-copy.is-visible h1>span:nth-child(2){animation-delay:.07s}
+.motion-ready .hero-copy.is-visible h1>strong{animation-delay:.14s}
+@keyframes soj-line-in{
+  from{opacity:0;transform:translate3d(0,30px,0);filter:blur(3px)}
+  to{opacity:1;transform:translate3d(0,0,0);filter:blur(0)}
+}
+
+/* THE ROOM — spatial 3D interpretation */
+.room-orbit.premium-room{
+  --room-rx:0deg;
+  --room-ry:0deg;
+  --room-lift:0px;
+  --room-scale:1;
+  --light-x:52%;
+  --light-y:28%;
+  transform-style:preserve-3d;
+  transform:perspective(1200px) translate3d(0,var(--room-lift),0) rotateX(var(--room-rx)) rotateY(var(--room-ry)) scale(var(--room-scale));
+  transform-origin:50% 55%;
+  transition:transform .65s var(--premium-ease),box-shadow .65s var(--premium-ease);
+  will-change:transform;
+  isolation:isolate;
+}
+.room-orbit.premium-room::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  z-index:8;
+  pointer-events:none;
+  background:radial-gradient(circle at var(--light-x) var(--light-y),rgba(255,255,255,.52),rgba(255,255,255,0) 28%);
+  mix-blend-mode:soft-light;
+  opacity:.75;
+}
+.room-orbit.premium-room .room-label,
+.room-orbit.premium-room .plan-note{transform:translateZ(30px)}
+.room-orbit.premium-room .kitchen-line{transform:translateZ(54px);box-shadow:0 18px 35px rgba(23,26,24,.13)}
+.room-orbit.premium-room .counter{transform:translateZ(78px);box-shadow:0 20px 30px rgba(23,26,24,.10)}
+.room-orbit.premium-room .table-plan{transform:translateZ(48px);box-shadow:0 14px 24px rgba(23,26,24,.08);transition:transform .55s var(--premium-ease),box-shadow .55s var(--premium-ease)}
+.room-orbit.premium-room .chef-dot{transform:translateZ(105px);transition:transform .55s var(--premium-ease),box-shadow .55s var(--premium-ease)}
+.room-orbit.premium-room .table-plan i,
+.room-orbit.premium-room .counter i{transition:background-color .35s ease,transform .35s var(--premium-ease)}
+
+@media (hover:hover) and (pointer:fine) and (min-width:881px){
+  .room-orbit.premium-room:hover{box-shadow:22px 30px 55px rgba(23,26,24,.13)}
+  .room-orbit.premium-room:hover .table-plan{box-shadow:0 18px 30px rgba(23,26,24,.13)}
+  .room-orbit.premium-room:hover .chef-dot{box-shadow:7px 9px 0 var(--ink),0 22px 34px rgba(23,26,24,.18)}
+  .room-orbit.premium-room:hover .table-plan i{background:#fff}
+}
+
+/* 16 seats: one measured reveal, not looping decoration */
+.seat-counter.premium-seats .seats i{transform:translateY(9px) scale(.78);opacity:.28;transition:transform .55s var(--premium-slow),opacity .55s ease,background-color .45s ease}
+.seat-counter.premium-seats.is-active .seats i{transform:none;opacity:1}
+.seat-counter.premium-seats.is-active .seats i:nth-child(1){transition-delay:.02s}.seat-counter.premium-seats.is-active .seats i:nth-child(2){transition-delay:.05s}.seat-counter.premium-seats.is-active .seats i:nth-child(3){transition-delay:.08s}.seat-counter.premium-seats.is-active .seats i:nth-child(4){transition-delay:.11s}
+.seat-counter.premium-seats.is-active .seats i:nth-child(5){transition-delay:.14s}.seat-counter.premium-seats.is-active .seats i:nth-child(6){transition-delay:.17s}.seat-counter.premium-seats.is-active .seats i:nth-child(7){transition-delay:.20s}.seat-counter.premium-seats.is-active .seats i:nth-child(8){transition-delay:.23s}
+.seat-counter.premium-seats.is-active .seats i:nth-child(9){transition-delay:.26s}.seat-counter.premium-seats.is-active .seats i:nth-child(10){transition-delay:.29s}.seat-counter.premium-seats.is-active .seats i:nth-child(11){transition-delay:.32s}.seat-counter.premium-seats.is-active .seats i:nth-child(12){transition-delay:.35s}
+.seat-counter.premium-seats.is-active .seats i:nth-child(13){transition-delay:.38s}.seat-counter.premium-seats.is-active .seats i:nth-child(14){transition-delay:.41s}.seat-counter.premium-seats.is-active .seats i:nth-child(15){transition-delay:.44s}.seat-counter.premium-seats.is-active .seats i:nth-child(16){transition-delay:.47s}
+.seat-counter.premium-seats.is-active .seats i:nth-child(4n+1){background:var(--porcelain)}
+
+/* Chef pair: subtle spatial separation */
+.person{transform-style:preserve-3d;transition:background-color .35s ease}
+.person .initial{display:block;transition:transform .6s var(--premium-slow),color .3s ease}
+@media (hover:hover) and (pointer:fine){
+  .person:hover{background:rgba(255,255,255,.035)}
+  .person:hover .initial{transform:translate3d(0,-5px,36px) rotate(-2deg);color:#ff7140}
+}
+
+/* Kitchen archive behaves like a chef's notebook, not cards */
+.ledger-row{position:relative;isolation:isolate;transition:transform .38s var(--premium-ease),padding-left .38s var(--premium-ease),background-color .3s ease}
+.ledger-row::before{content:"";position:absolute;inset:0;z-index:-1;background:var(--porcelain);transform:scaleY(0);transform-origin:bottom;transition:transform .38s var(--premium-ease)}
+@media (hover:hover) and (pointer:fine){
+  .ledger-row:hover{transform:perspective(900px) translate3d(8px,-2px,18px);padding-left:12px}
+  .ledger-row:hover::before{transform:scaleY(1)}
+  .ledger-row:hover .ledger-no{color:var(--oxide)}
+}
+
+/* Wine: quiet depth and material highlight */
+.wine{position:relative;overflow:hidden;isolation:isolate}
+.wine::before{content:"";position:absolute;inset:-30%;z-index:-1;background:radial-gradient(circle at 34% 42%,rgba(255,255,255,.10),transparent 26%),linear-gradient(116deg,transparent 28%,rgba(255,255,255,.035) 48%,transparent 68%);transform:translate3d(0,var(--wine-shift,0px),0);will-change:transform}
+.wine-mark{perspective:1000px}
+.bucket{transform:translate(-50%,-50%) rotateX(var(--bucket-rx,0deg)) rotateY(var(--bucket-ry,0deg));transform-style:preserve-3d;transition:transform .7s var(--premium-ease),filter .5s ease;will-change:transform}
+.bucket span{transform:translateZ(36px)}
+@media (hover:hover) and (pointer:fine){.wine:hover .bucket{filter:drop-shadow(0 28px 24px rgba(20,0,6,.18))}}
+
+/* Review / location slow the rhythm */
+.proof-score{transition:transform .55s var(--premium-ease),box-shadow .55s var(--premium-ease)}
+@media (hover:hover) and (pointer:fine){.proof-score:hover{transform:translateY(-5px);box-shadow:10px 12px 0 rgba(23,26,24,.08)}}
+.visit-card{transition:transform .45s var(--premium-ease),box-shadow .45s var(--premium-ease)}
+@media (hover:hover) and (pointer:fine){.visit-card:hover{transform:translateY(-4px);box-shadow:12px 14px 0 rgba(23,26,24,.08)}}
+
+/* Magnetic actions: intentionally tiny movement */
+.premium-magnetic{--mag-x:0px;--mag-y:0px;transform:translate3d(var(--mag-x),var(--mag-y),0);transition:transform .32s var(--premium-ease),background .2s,color .2s,border-color .2s;will-change:transform}
+.premium-magnetic:hover{transform:translate3d(var(--mag-x),calc(var(--mag-y) - 2px),0)}
+
+/* Closing plan gains depth without continuous animation */
+.closing-plan{transform-style:preserve-3d}
+.closing-plan i{transition:transform .5s var(--premium-slow),background-color .3s ease}
+.closing.in-view .closing-plan i:nth-child(odd){transform:translateZ(24px)}
+.closing.in-view .closing-plan i:nth-child(even){transform:translateZ(8px);background:rgba(255,255,255,.08)}
+
+/* Mobile keeps the premium hierarchy, not desktop motion */
+@media (max-width:880px){
+  .room-orbit.premium-room{transform:none!important;transition:box-shadow .35s ease}
+  .room-orbit.premium-room .room-label,.room-orbit.premium-room .plan-note,.room-orbit.premium-room .kitchen-line,.room-orbit.premium-room .counter,.room-orbit.premium-room .table-plan,.room-orbit.premium-room .chef-dot{transform:none}
+  .bucket{transform:translate(-50%,-50%)!important}
+  .premium-magnetic,.premium-magnetic:hover{transform:none}
+}
+
+@media (prefers-reduced-motion:reduce){
+  .motion-ready .hero-copy.is-visible h1>span,.motion-ready .hero-copy.is-visible h1>strong{animation:none}
+  .room-orbit.premium-room{transform:none!important;transition:none}
+  .room-orbit.premium-room *,.seat-counter.premium-seats .seats i,.person .initial,.ledger-row,.bucket,.proof-score,.visit-card,.closing-plan i,.premium-magnetic{transition:none!important;transform:none!important}
+  .seat-counter.premium-seats .seats i{opacity:1}
+  .wine::before{transform:none}
+}
