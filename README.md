@@ -65,6 +65,24 @@ La demo è intenzionalmente diversa dalle altre demo Punto Due Studio:
 4. Palette mint / porcelain / ink / oxide, distinta dalle direzioni già usate per Gagarin, Cantina Canistracci e Sanafollia.
 5. Sezione menu trattata come ledger / archivio, con esplicita distinzione tra piatti documentati e menu corrente.
 
+## Premium interaction upgrade
+
+Il layer premium è implementato come progressive enhancement e non richiede Three.js/WebGL.
+
+- La stanza dell'hero usa prospettiva CSS 3D e reagisce in modo leggero al pointer su desktop.
+- Banco, tavoli, chef e annotazioni sono distribuiti su livelli di profondità differenti.
+- I 16 posti si attivano progressivamente una sola volta entrando in viewport.
+- CTA principali e link selezionati hanno un magnetic hover limitato a pochi pixel.
+- La sezione cucina mantiene il formato ledger ma acquisisce profondità controllata al passaggio del pointer.
+- La sezione vino usa una risposta materica e prospettica leggera senza replicare il visual di Cantina Canistracci.
+- L'header mostra il progresso della pagina e lo stato della sezione corrente.
+- Lo scroll applica soltanto piccoli shift spaziali, senza loop di animazione continui.
+- Su dispositivi touch/mobile il 3D dinamico viene semplificato intenzionalmente.
+- `prefers-reduced-motion` disattiva parallax, prospettiva dinamica e transizioni non essenziali.
+- Se JavaScript non è disponibile o l'enhancement fallisce, i contenuti rimangono leggibili.
+
+File dedicato: `premium.css`.
+
 ## Funzionalità
 
 - click-to-call
@@ -73,6 +91,9 @@ La demo è intenzionalmente diversa dalle altre demo Punto Due Studio:
 - responsive navigation
 - mobile action dock
 - progressive reveal animations
+- premium CSS 3D interaction layer
+- page progress + active section indicator
+- magnetic micro-interactions desktop-only
 - `prefers-reduced-motion`
 - keyboard focus states
 - Schema.org Restaurant
@@ -91,6 +112,10 @@ Sito statico senza build step.
 - Functions directory: vuota
 
 `netlify.toml` è già incluso.
+
+## QA note
+
+Il layer è progettato per degradare in modo sicuro: l'esperienza base resta utilizzabile senza `premium.css` o senza JavaScript. Prima della consegna definitiva al cliente è comunque consigliato un pass browser live sui viewport 320, 360, 375, 390, 430, 768, 1024 e 1440 px dopo il deploy pubblico, includendo pointer/scroll/keyboard/touch e console errors.
 
 ## Dopo il deploy
 
